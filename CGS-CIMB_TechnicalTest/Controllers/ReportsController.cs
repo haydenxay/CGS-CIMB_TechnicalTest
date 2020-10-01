@@ -66,7 +66,7 @@ namespace CGS_CIMB_TechnicalTest.Controllers
             _context.Reports.Update(reports);
             await _context.SaveChangesAsync();
 
-            return File(memory, GetContentType(path), Path.GetFileName(path));
+            return File(memory, GetContentType(path), path);
         }
 
         private string GetContentType(string path)
