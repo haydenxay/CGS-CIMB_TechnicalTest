@@ -37,20 +37,6 @@ namespace CGS_CIMB_TechnicalTest.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Reports>> GetReports(Guid id)
         {
-            //var reports = await _context.ReportFiles.FindAsync(id);
-
-            //if (reports == null)
-            //{
-            //    return NotFound();
-            //}
-
-            //var filename = _context.ReportFiles.Where(x => x.Id == id).Select(x => x.FileName).SingleOrDefault();
-
-            //if (filename == null)
-            //    return Content("filename not present");
-
-            //var folder = _context.FileUpload.Where(x => x.FileFolder == filename).Select(x => x.FilePath).SingleOrDefault();
-
             var path = _context.Reports.Include(x => x.ReportFiles).Where(x => x.Id == id).Select(x => x.ReportFiles.FilePath).SingleOrDefault();
 
             var memory = new MemoryStream();
@@ -155,10 +141,6 @@ namespace CGS_CIMB_TechnicalTest.Controllers
             _context.ReportFiles.Add(reportFiles);
             await _context.SaveChangesAsync();
 
-            //_context.ReportFiles.Add(reports);
-            //await _context.SaveChangesAsync();
-
-            //return CreatedAtRoute(routeName: "myFile", routeValues: new { filename = files.FileName }, value: null);
             reports.Id = Guid.NewGuid();
             reports.Title = title;
             reports.ReportFilesId = reportFiles.Id;
